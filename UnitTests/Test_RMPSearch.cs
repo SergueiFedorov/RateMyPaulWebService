@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RMPExtractor.Code;
+using RMPExtractorLibrary;
 using System.Collections;
 using System.Collections.Generic;
+using RMPExtractorLibrary.Objects;
 
 namespace UnitTests
 {
@@ -26,7 +27,7 @@ namespace UnitTests
         public void GetProfessorPageBurke()
         {
             RMPProfessor professor = RMPProfessor.Get("http://www.ratemyprofessors.com/ShowRatings.jsp?tid=461833");
-            List<RatingNode> ratings = professor.Ratings.ToList();
+            List<ProfessorRatingResult> ratings = professor.Ratings.ToList();
 
             Assert.IsNotNull(ratings);
             Assert.IsTrue(ratings.Count > 0);
@@ -36,7 +37,7 @@ namespace UnitTests
             Assert.IsTrue(ratings.Any(rating => rating.Label == "Clarity"));
             Assert.IsTrue(ratings.Any(rating => rating.Label == "Easiness"));
 
-            List<RatingNode> grades = professor.Grades.ToList();
+            List<ProfessorRatingResult> grades = professor.Grades.ToList();
 
             Assert.IsNotNull(grades);
             Assert.IsTrue(grades.Count > 0);

@@ -1,0 +1,15 @@
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\bin\Release\UnitTests.dll
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\bin\Release\UnitTests.pdb
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\bin\Release\HtmlAgilityPack.dll
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\bin\Release\RMPExtractor.dll
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\bin\Release\System.Web.Optimization.dll
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\bin\Release\System.Web.Mvc.dll
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\bin\Release\System.Web.Http.Tracing.dll
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\bin\Release\Newtonsoft.Json.dll
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\bin\Release\RMPExtractor.pdb
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\bin\Release\System.Web.Mvc.xml
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\bin\Release\System.Web.Http.Tracing.xml
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\bin\Release\Newtonsoft.Json.xml
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\obj\Release\UnitTests.csprojResolveAssemblyReference.cache
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\obj\Release\UnitTests.dll
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\obj\Release\UnitTests.pdb

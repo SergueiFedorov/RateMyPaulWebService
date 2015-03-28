@@ -3,16 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using HtmlAgilityPack;
+using RMPExtractorLibrary.Objects;
 
-namespace RMPExtractor.Code
+namespace RMPExtractorLibrary
 {
-    public class ProfessorSearchResult
-    {
-        public string Name { get; set; }
-        public string College { get; set; }
-        public string URL { get; set; }
-    }
-
     public class RMPSearch
     {
         private const string queryString = "http://www.ratemyprofessors.com/search.jsp?queryoption=HEADER&queryBy=teacherName&schoolName=DePaul+University&schoolID=1389&query={0}";

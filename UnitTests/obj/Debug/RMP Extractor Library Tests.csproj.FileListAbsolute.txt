@@ -1,0 +1,8 @@
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\bin\Debug\UnitTests.dll
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\bin\Debug\UnitTests.pdb
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\bin\Debug\HtmlAgilityPack.dll
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\bin\Debug\RMPExtractorLibrary.dll
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\bin\Debug\RMPExtractorLibrary.pdb
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\obj\Debug\RMP Extractor Library Tests.csprojResolveAssemblyReference.cache
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\obj\Debug\UnitTests.dll
+C:\Users\sfedo_000\RateMyPaulWebService\UnitTests\obj\Debug\UnitTests.pdb

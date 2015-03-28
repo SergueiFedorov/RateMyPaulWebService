@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace RMPExtractor.Code
+namespace RMPExtractorLibrary
 {
     internal static class RMPParsingTools
     {

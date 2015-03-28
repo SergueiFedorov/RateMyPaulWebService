@@ -57,9 +57,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RMPExtractor\RMPExtractor.csproj">
-      <Project>{fd116982-24a5-43eb-906b-b75d4989408c}</Project>
-      <Name>RMPExtractor</Name>
+    <ProjectReference Include="..\RMPExtractorLibrary\RMPExtractorLibrary.csproj">
+      <Project>{32ac82e8-26c8-41b4-8cfc-ff822480f917}</Project>
+      <Name>RMPExtractorLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
