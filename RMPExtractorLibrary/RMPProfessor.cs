@@ -1,7 +1,9 @@
 ﻿using HtmlAgilityPack;
+using RMPExtractorLibrary.Exceptions;
 using RMPExtractorLibrary.Objects;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -16,6 +18,11 @@ namespace RMPExtractorLibrary
         {
             get
             {
+                if (this.IsValid == false)
+                {
+                    return null;
+                }
+
                 HtmlNode sliderNodes = RMPParsingTools.GetNodesByClass(WebDocument.DocumentNode.Descendants(), "faux-slides").First();
 
                 return  RMPParsingTools.GetNodesByClass(sliderNodes.Descendants(), "rating-slider")
@@ -32,6 +39,11 @@ namespace RMPExtractorLibrary
         {
             get
             {
+                if (this.IsValid == false)
+                {
+                    return null;
+                }
+
                 HtmlNode gradeNodes = RMPParsingTools.GetNodesByClass(WebDocument.DocumentNode.Descendants(),  "breakdown-wrapper").First();
 
                 return RMPParsingTools.GetNodesByClass(gradeNodes.Descendants(), "breakdown-header")
@@ -43,14 +55,49 @@ namespace RMPExtractorLibrary
             }
         }
 
+        private bool _URLFetchFailed = false;
+
+        public bool IsValid
+        {
+            get
+            {
+                if (_URLFetchFailed)
+                {
+                    return false;
+                }
+
+                List<HtmlNode> errorNodes = RMPParsingTools.GetNodesByClass(WebDocument.DocumentNode.Descendants(), "header error").ToList();
+                return errorNodes.Count == 0;
+            }
+        }
+
         private RMPProfessor(string url)
         {
             this.htmlWeb = new HtmlWeb();
-            this.WebDocument = this.htmlWeb.Load(url);
+
+            try
+            {
+                this.WebDocument = this.htmlWeb.Load(url);
+            }
+            catch (Exception ex)
+            {
+                if (ex is System.UriFormatException || ex is HtmlAgilityPack.HtmlWebException)
+                {
+                    _URLFetchFailed = true;
+                    throw new InvalidPageException(ex, url);
+                }
+
+                throw ex;
+            }
         }
 
         public static RMPProfessor Get(string url)
         {
+            if (url.ToLower().Contains("ratemyprofessors.com") == false)
+            {
+                throw new IsNotRMPURLException();
+            }
+
             return new RMPProfessor(url);
         }
     }

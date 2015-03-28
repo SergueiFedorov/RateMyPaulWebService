@@ -37,12 +37,10 @@ namespace RMPExtractorLibrary
             this.WebDocument = this.htmlWeb.Load(String.Format(queryString, name));
         }
 
-        public static RMPSearch InvokeSearch(string professorName)
+        public static RMPSearch Get(string professorName)
         {
             return new RMPSearch(professorName);
         }
-
-
 
     }
 }

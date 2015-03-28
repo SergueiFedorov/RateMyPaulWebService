@@ -14,7 +14,7 @@ namespace RMPExtractor.Controllers
         // GET api/search/5
         public IEnumerable<ProfessorSearchResult> Get(string id)
         {
-            RMPSearch searchResult = RMPSearch.InvokeSearch(id);
+            RMPSearch searchResult = RMPSearch.Get(id);
             return searchResult.Professors;
         }
     }

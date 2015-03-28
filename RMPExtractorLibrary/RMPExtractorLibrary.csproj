@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\InvalidPageException.cs" />
+    <Compile Include="Exceptions\IsNotRMPURLException.cs" />
     <Compile Include="Objects\ProfessorPageResult.cs" />
     <Compile Include="Objects\ProfessorSearchResult.cs" />
     <Compile Include="Objects\ProfessorRatingResult.cs" />
