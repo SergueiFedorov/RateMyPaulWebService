@@ -31,15 +31,14 @@ namespace RMPExtractor.Code
         {
             get
             {
-                HtmlNode sliderNodes = WebDocument.DocumentNode.Descendants()
-                                                    .Where(node => node.Attributes["class"] != null
-                                                           && node.Attributes["class"].Value == "faux-slides").First();
+                HtmlNode sliderNodes = RMPParsingTools.GetNodesByClass(WebDocument.DocumentNode.Descendants(), "faux-slides").First();
 
-                return sliderNodes.Descendants().Where(node => node.Attributes["class"] != null &&  node.Attributes["class"].Value == "rating-slider")
+                return sliderNodes.Descendants().Where(node => RMPParsingTools.CheckIfNodeHasClass(node, "rating-slider"))
                                   .Select(node => new RatingNode
                                    {
-                                       Label = node.ChildNodes.Where(x => x.Attributes["class"] != null && x.Attributes["class"].Value == "label").FirstOrDefault().InnerText,
-                                       Rating = node.ChildNodes.Where(x => x.Attributes["class"] != null && x.Attributes["class"].Value == "rating").FirstOrDefault().InnerText,
+
+                                       Label = RMPParsingTools.GetNodeValueByClass(node.ChildNodes, "label"),
+                                       Rating = RMPParsingTools.GetNodeValueByClass(node.ChildNodes, "rating"),
                                    });
             }
 
@@ -49,17 +48,14 @@ namespace RMPExtractor.Code
         {
             get
             {
-                HtmlNode gradeNodes = WebDocument.DocumentNode.Descendants()
-                                                    .Where(node => node.Attributes["class"] != null
-                                                           && node.Attributes["class"].Value == "breakdown-wrapper").First();
+                HtmlNode gradeNodes = RMPParsingTools.GetNodesByClass(WebDocument.DocumentNode.Descendants(),  "breakdown-wrapper").First();
 
-                return gradeNodes.Descendants().Where(node => node.Attributes["class"] != null
-                                                           && node.Attributes["class"].Value == "breakdown-header")
-                                               .Select(node => new RatingNode
-                                               {
-                                                   Label = node.InnerText.Trim(),
-                                                   Rating = node.Descendants().Where(innerNode => innerNode.Attributes["class"] != null && innerNode.Attributes["class"].Value == "grade").First().InnerText
-                                               });
+                return RMPParsingTools.GetNodesByClass(gradeNodes.Descendants(), "breakdown-header")
+                                        .Select(node => new RatingNode
+                                        {
+                                            Label = node.InnerText.Trim(),
+                                            Rating = RMPParsingTools.GetNodeValueByClass(node.Descendants(), "grade")
+                                        });
             }
         }
 

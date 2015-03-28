@@ -151,6 +151,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Code\RMPParsingTools.cs" />
     <Compile Include="Code\RMPProfessor.cs" />
     <Compile Include="Code\RMPSearch.cs" />
     <Compile Include="Controllers\ProfessorController.cs" />
