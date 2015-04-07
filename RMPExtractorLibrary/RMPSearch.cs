@@ -4,15 +4,15 @@ using System.Linq;
 using System.Web;
 using HtmlAgilityPack;
 using RMPExtractorLibrary.Objects;
+using RMPExtractorLibrary.Caching;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace RMPExtractorLibrary
 {
-    public class RMPSearch
+    public class RMPSearch : RMPParseRequest, ICachable
     {
         private const string queryString = "http://www.ratemyprofessors.com/search.jsp?queryoption=HEADER&queryBy=teacherName&schoolName=DePaul+University&schoolID=1389&query={0}";
-
-        public HtmlDocument WebDocument { get; private set; }
-        public HtmlWeb htmlWeb;
 
         public IEnumerable<ProfessorSearchResult> Professors 
         {
@@ -31,10 +31,18 @@ namespace RMPExtractorLibrary
             }
         }
 
+        private string _name;
+
         private RMPSearch(string name)
+            : base(String.Format(queryString, name))
         {
-            this.htmlWeb = new HtmlWeb();
-            this.WebDocument = this.htmlWeb.Load(String.Format(queryString, name));
+            _name = name;
+        }
+
+        private RMPSearch(HtmlDocument document)
+            : base(document)
+        {
+
         }
 
         public static RMPSearch Get(string professorName)
@@ -42,5 +50,22 @@ namespace RMPExtractorLibrary
             return new RMPSearch(professorName);
         }
 
+        public static RMPSearch GetFromString(string html)
+        {
+            HtmlDocument document = new HtmlDocument();
+            document.LoadHtml(html);
+
+            return new RMPSearch(document);
+        }
+
+        public override string GetObjectID()
+        {
+            byte[] pathBytes = Encoding.ASCII.GetBytes(_name);
+
+            MD5 hash = MD5.Create();
+            byte[] outputBytes = hash.ComputeHash(pathBytes, 0, pathBytes.Length);
+
+            return string.Concat(outputBytes.Select(x => x.ToString("X2")));
+        }
     }
 }

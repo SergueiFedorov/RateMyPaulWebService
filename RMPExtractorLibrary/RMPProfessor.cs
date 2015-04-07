@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using RMPExtractorLibrary.Caching;
 using RMPExtractorLibrary.Exceptions;
 using RMPExtractorLibrary.Objects;
 using System;
@@ -6,13 +7,26 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
+using System.Security.Cryptography;
+using System.ComponentModel;
+using System.Text;
+using System.IO;
 
 namespace RMPExtractorLibrary
 {
-    public class RMPProfessor
+    public class RMPProfessor : RMPParseRequest
     {
-        public HtmlDocument WebDocument { get; private set; }
-        public HtmlWeb htmlWeb;
+        private RMPProfessor(string url)
+            : base(url)
+        {
+
+        }
+
+        private RMPProfessor(HtmlDocument document)
+            : base(document)
+        {
+
+        }
 
         public IEnumerable<ProfessorRatingResult> Ratings
         {
@@ -23,7 +37,14 @@ namespace RMPExtractorLibrary
                     return null;
                 }
 
-                HtmlNode sliderNodes = RMPParsingTools.GetNodesByClass(WebDocument.DocumentNode.Descendants(), "faux-slides").First();
+                HtmlNode sliderNodes = RMPParsingTools.GetNodesByClass(WebDocument.DocumentNode.Descendants(), "faux-slides").FirstOrDefault();
+
+                if (sliderNodes == null)
+                {
+                    //Return empty grades
+                    return DefaultInitializations.DefaultProfessorRatings;
+                }
+
 
                 return  RMPParsingTools.GetNodesByClass(sliderNodes.Descendants(), "rating-slider")
                                        .Select(node => new ProfessorRatingResult
@@ -44,7 +65,13 @@ namespace RMPExtractorLibrary
                     return null;
                 }
 
-                HtmlNode gradeNodes = RMPParsingTools.GetNodesByClass(WebDocument.DocumentNode.Descendants(),  "breakdown-wrapper").First();
+                HtmlNode gradeNodes = RMPParsingTools.GetNodesByClass(WebDocument.DocumentNode.Descendants(),  "breakdown-wrapper").FirstOrDefault();
+
+                //Grades are not found
+                if (gradeNodes == null)
+                {
+                    return DefaultInitializations.DefaultProfessorGrades;
+                }
 
                 return RMPParsingTools.GetNodesByClass(gradeNodes.Descendants(), "breakdown-header")
                                         .Select(node => new ProfessorRatingResult
@@ -55,50 +82,17 @@ namespace RMPExtractorLibrary
             }
         }
 
-        private bool _URLFetchFailed = false;
-
-        public bool IsValid
-        {
-            get
-            {
-                if (_URLFetchFailed)
-                {
-                    return false;
-                }
-
-                List<HtmlNode> errorNodes = RMPParsingTools.GetNodesByClass(WebDocument.DocumentNode.Descendants(), "header error").ToList();
-                return errorNodes.Count == 0;
-            }
-        }
-
-        private RMPProfessor(string url)
-        {
-            this.htmlWeb = new HtmlWeb();
-
-            try
-            {
-                this.WebDocument = this.htmlWeb.Load(url);
-            }
-            catch (Exception ex)
-            {
-                if (ex is System.UriFormatException || ex is HtmlAgilityPack.HtmlWebException)
-                {
-                    _URLFetchFailed = true;
-                    throw new InvalidPageException(ex, url);
-                }
-
-                throw ex;
-            }
-        }
-
         public static RMPProfessor Get(string url)
         {
-            if (url.ToLower().Contains("ratemyprofessors.com") == false)
-            {
-                throw new IsNotRMPURLException();
-            }
-
             return new RMPProfessor(url);
+        }
+
+        public static RMPProfessor GetFromString(string html)
+        {
+            HtmlDocument document = new HtmlDocument();
+            document.LoadHtml(html);
+
+            return new RMPProfessor(document);
         }
     }
 }

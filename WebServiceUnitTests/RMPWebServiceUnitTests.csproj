@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E1E90EAA-D9DE-4239-A1F6-F3A106FDABB0}</ProjectGuid>
+    <ProjectGuid>{E3121365-3D50-497D-83C3-986B3F949EF6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UnitTests</RootNamespace>
-    <AssemblyName>UnitTests</AssemblyName>
+    <RootNamespace>WebServiceUnitTests</RootNamespace>
+    <AssemblyName>WebServiceUnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,10 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlAgilityPack">
-      <HintPath>..\RMPExtractor\bin\HtmlAgilityPack.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -53,15 +51,18 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Test_RMPReviews.cs" />
-    <Compile Include="Test_Caching.cs" />
-    <Compile Include="Test_RMPSearch.cs" />
+    <Compile Include="ProfessorRemoteTests.cs" />
+    <Compile Include="ProfessorServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RMPExtractorLibrary\RMPExtractorLibrary.csproj">
       <Project>{32ac82e8-26c8-41b4-8cfc-ff822480f917}</Project>
       <Name>RMPExtractorLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RMPExtractor\RMPExtractorWebService.csproj">
+      <Project>{fd116982-24a5-43eb-906b-b75d4989408c}</Project>
+      <Name>RMPExtractorWebService</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

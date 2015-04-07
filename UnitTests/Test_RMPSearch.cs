@@ -48,6 +48,29 @@ namespace UnitTests
         }
 
         [TestMethod]
+        public void GetProfessorWithMissingData()
+        {
+            RMPProfessor professor = RMPProfessor.Get("http://www.ratemyprofessors.com/AddRating.jsp?tid=1988111");
+            List<ProfessorRatingResult> ratings = professor.Ratings.ToList();
+
+            Assert.IsNotNull(ratings);
+            Assert.IsTrue(professor.IsValid);
+            Assert.IsTrue(ratings.Count > 0);
+            Assert.IsTrue(ratings.Count == 3);
+
+            Assert.IsTrue(ratings.Any(rating => rating.Label == "Helpfulness"));
+            Assert.IsTrue(ratings.Any(rating => rating.Label == "Clarity"));
+            Assert.IsTrue(ratings.Any(rating => rating.Label == "Easiness"));
+
+            List<ProfessorRatingResult> grades = professor.Grades.ToList();
+
+            Assert.IsNotNull(grades);
+            Assert.IsTrue(grades.Count > 0);
+            Assert.IsTrue(grades.Count == 3);
+
+        }
+
+        [TestMethod]
         public void GetInvalidProfessor()
         {
             RMPProfessor professor = RMPProfessor.Get("http://www.ratemyprofessors.com/ShowRatings.jsp?tid=123");

@@ -1,4 +1,5 @@
 ﻿using RMPExtractorLibrary;
+using RMPExtractorLibrary.Caching;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,19 @@ namespace RMPExtractor.Controllers
         // GET api/professor
         public dynamic Get(Uri url)
         {
-            RMPProfessor professor = RMPProfessor.Get("http://www.ratemyprofessors.com/" + url.ToString());
+            string cachedHTML = Cache.GetRecordHTML("http://www.ratemyprofessors.com/" + url.ToString());
+
+            RMPProfessor professor = null;
+
+            if (cachedHTML != null)
+            {
+                professor = RMPProfessor.GetFromString(cachedHTML);
+            }
+            else
+            {
+                professor = RMPProfessor.Get("http://www.ratemyprofessors.com/" + url.ToString());
+                Cache.CacheHTMLRecord(professor);
+            }
 
             return new
             {

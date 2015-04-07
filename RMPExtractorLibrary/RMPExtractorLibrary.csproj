@@ -42,14 +42,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caching\Cache.cs" />
+    <Compile Include="Caching\ICachable.cs" />
+    <Compile Include="DefaultInitializations.cs" />
     <Compile Include="Exceptions\InvalidPageException.cs" />
     <Compile Include="Exceptions\IsNotRMPURLException.cs" />
     <Compile Include="Objects\ProfessorPageResult.cs" />
+    <Compile Include="Objects\ProfessorReviewResult.cs" />
     <Compile Include="Objects\ProfessorSearchResult.cs" />
     <Compile Include="Objects\ProfessorRatingResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RMPParseRequest.cs" />
     <Compile Include="RMPParsingTools.cs" />
     <Compile Include="RMPProfessor.cs" />
+    <Compile Include="RMPReviews.cs" />
     <Compile Include="RMPSearch.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
