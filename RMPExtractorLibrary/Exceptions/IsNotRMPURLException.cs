@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace RMPExtractorLibrary.Exceptions
 {
+    [Serializable]
     public class IsNotRMPURLException : Exception
     {
         public IsNotRMPURLException()

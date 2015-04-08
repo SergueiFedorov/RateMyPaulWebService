@@ -10,7 +10,7 @@ using System.Text;
 
 namespace RMPExtractorLibrary
 {
-    public class RMPSearch : RMPParseRequest, ICachable
+    public class RMPSearch : RMPParseRequest
     {
         private const string queryString = "http://www.ratemyprofessors.com/search.jsp?queryoption=HEADER&queryBy=teacherName&schoolName=DePaul+University&schoolID=1389&query={0}";
 
@@ -18,15 +18,25 @@ namespace RMPExtractorLibrary
         {
             get
             {
-                List<HtmlNode> professorNodes = WebDocument.DocumentNode.Descendants()
-                                                .Where(node => node.Name == "li" && node.Attributes["class"] != null && node.Attributes["class"].Value == "listing PROFESSOR")
-                                                .ToList();
+                /*List<HtmlNode> professorNodes = WebDocument.DocumentNode.Descendants()
+                                                .Where(node => node.Attributes["class"] != null && node.Attributes["class"].Value == "listing PROFESSOR")
+                                                .ToList();*/
+
+
+                var professorNodes = WebDocument.DocumentNode.SelectNodes("//li[contains(@class, 'listing PROFESSOR')]");
+
+                if (professorNodes == null)
+                {
+                    return null;
+                }
 
                 return professorNodes.Select(node => new ProfessorSearchResult
                                         {
-                                            URL = node.Descendants().Where(innerNode => innerNode.Name == "a").FirstOrDefault().Attributes["href"].Value,
-                                            College = node.Descendants().Where(innerNode => innerNode.Attributes["class"] != null && innerNode.Attributes["class"].Value == "sub").FirstOrDefault().InnerText,
-                                            Name = node.Descendants().Where(innerNode => innerNode.Attributes["class"] != null && innerNode.Attributes["class"].Value == "main").FirstOrDefault().InnerText,
+                                            URL = node.LastChild.Attributes["href"].Value,
+                                           // College = node.Descendants("span").Where(innerNode => innerNode.Attributes["class"] != null && innerNode.Attributes["class"].Value == "sub").First().InnerText,
+                                            College = node.SelectNodes("//span[contains(@class, 'sub')]").First().InnerText,
+                                            //Name = node.Descendants("span").Where(innerNode => innerNode.Attributes["class"] != null && innerNode.Attributes["class"].Value == "main").First().InnerText,
+                                            Name = node.SelectNodes("//span[contains(@class, 'main')]").First().InnerText
                                         });
             }
         }
@@ -56,16 +66,6 @@ namespace RMPExtractorLibrary
             document.LoadHtml(html);
 
             return new RMPSearch(document);
-        }
-
-        public override string GetObjectID()
-        {
-            byte[] pathBytes = Encoding.ASCII.GetBytes(_name);
-
-            MD5 hash = MD5.Create();
-            byte[] outputBytes = hash.ComputeHash(pathBytes, 0, pathBytes.Length);
-
-            return string.Concat(outputBytes.Select(x => x.ToString("X2")));
         }
     }
 }

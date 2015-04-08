@@ -43,7 +43,7 @@ namespace RMPExtractorLibrary
                     throw new InvalidPageException(ex, url);
                 }
 
-                throw ex;
+                throw;
             }
         }
 

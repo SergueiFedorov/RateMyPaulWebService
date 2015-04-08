@@ -21,10 +21,8 @@ namespace RMPExtractorLibrary.Caching
 
             using (FileStream fStream = File.Create(objectID))
             {
-                using(StreamWriter writter = new StreamWriter(fStream))
-                {
-                    writter.Write(cachableObject.GetDataToCache());
-                }
+                StreamWriter writter = new StreamWriter(fStream);
+                writter.Write(cachableObject.GetDataToCache());
             }
         }
 
@@ -49,10 +47,8 @@ namespace RMPExtractorLibrary.Caching
 
                 using (FileStream fstream = File.Open(fileName, FileMode.Open))
                 {
-                    using(StreamReader reader = new StreamReader(fstream))
-                    {
-                        result = reader.ReadToEnd();
-                    }
+                    StreamReader reader = new StreamReader(fstream);
+                    result = reader.ReadToEnd();
                 }
 
                 return result;

@@ -12,17 +12,24 @@ namespace WebServiceUnitTests
     public class ProfessorServiceTests
     {
         [TestMethod]
-        public void ProfessorGet_Test()
+        public void ProfessorGet()
         {
             ProfessorController professorController = new ProfessorController();
             dynamic result = professorController.Get(new Uri("http://www.ratemyprofessors.com/ShowRatings.jsp?tid=461833"));
         }
 
         [TestMethod]
-        public void SearchGet_Test()
+        public void SearchGet()
         {
             SearchController searchController = new SearchController();
-            dynamic result = searchController.Get("Rubin Burke");
+            dynamic result = searchController.Get("Robin Burke");
+        }
+
+        [TestMethod]
+        public void SearchGetInvalidName()
+        {
+            SearchController searchController = new SearchController();
+            dynamic result = searchController.Get("1234");
         }
     }
 }
